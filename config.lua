@@ -15,6 +15,8 @@ lvim.format_on_save = {
     pattern = "*.lua,*.rs,*.go",
     timeout = 1000,
 }
+lvim.colorscheme = "murphy"
+lvim.transparent_window = true
 -- lvim.use_icons = false
 
 -- keymappings <https://www.lunarvim.org/docs/configuration/keybindings>
@@ -182,7 +184,7 @@ lvim.plugins = {
                 other_win_hl_color = "#e35e4f",
             })
         end,
-    }
+    },
 }
 -- example mappings you can place in some other place
 -- An awesome method to jump to windows
