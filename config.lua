@@ -15,7 +15,7 @@ lvim.format_on_save = {
     pattern = "*.lua,*.rs,*.go",
     timeout = 1000,
 }
-lvim.colorscheme = "murphy"
+lvim.colorscheme = "slate"
 lvim.transparent_window = true
 -- lvim.use_icons = false
 
