@@ -5,7 +5,6 @@ vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
 vim.opt.relativenumber = true
 vim.opt.termguicolors = true
-
 -- general
 lvim.log.level = "info"
 
@@ -177,7 +176,11 @@ lvim.plugins = {
     {
         "rcarriga/nvim-notify",
         config = function()
-            vim.notify = require('notify')
+            local notify = require('notify')
+            notify.setup({
+                backgroud_colour = '#000000'
+            })
+            vim.notify = notify
         end
     },
     {
@@ -208,6 +211,17 @@ lvim.plugins = {
                 virt_lines = false, -- show virtual lines instead of virtual text (will flicker!)
                 virt_text_win_col = nil -- position the virtual text at a fixed window column (starting from the first text column) ,
                 -- e.g. 80 to position at column 80, see `:h nvim_buf_set_extmark()`
+            }
+        end
+    },
+    {
+        "folke/todo-comments.nvim",
+        requires = "nvim-lua/plenary.nvim",
+        config = function()
+            require("todo-comments").setup {
+                -- your configuration comes here
+                -- or leave it empty to use the default settings
+                -- refer to the configuration section below
             }
         end
     }
