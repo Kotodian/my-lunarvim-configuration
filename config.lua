@@ -224,8 +224,28 @@ lvim.plugins = {
                 -- refer to the configuration section below
             }
         end
+    },
+    {
+        "simrat39/rust-tools.nvim",
+        config = function()
+            require("rust-tools").setup {
+                tools = {
+                    runnables = {
+                        use_telescope = true,
+                    },
+                    inlay_hints = {
+                        auto = true,
+                        show_parameter_hints = false,
+                        parameter_hints_prefix = "",
+                        other_hints_prefix = "",
+                    },
+                },
+            }
+
+        end
     }
 }
+
 
 -- add your own keymapping
 -- lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
