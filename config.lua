@@ -485,6 +485,8 @@ lvim.plugins = {
     }
 }
 
+require 'chatgpt'.setup()
+
 
 
 -- add your own keymapping
