@@ -97,6 +97,7 @@ require 'lspconfig'.bufls.setup {}
 
 -- -- Additional Plugins <https://www.lunarvim.org/docs/plugins#user-plugins>
 
+
 lvim.plugins = {
     {
         "folke/trouble.nvim",
@@ -171,6 +172,7 @@ lvim.plugins = {
                 gotests_template_dir = "", -- sets gotests -template_dir parameter (check gotests for details)
                 comment_placeholder = '', -- comment_placeholder your cool placeholder e.g. ﳑ       
                 icons = { breakpoint = '🧘', currentpos = '🏃' }, -- setup to `false` to disable icons setup
+                -- icons = false, -- setup to `false` to disable icons setup
                 verbose = false, -- output loginf in messages
                 lsp_cfg = true, -- true: use non-default gopls setup specified in go/lsp.lua
                 -- false: do nothing
@@ -230,10 +232,24 @@ lvim.plugins = {
                 sign_priority = 5, -- change to a higher number to override other signs
                 dap_debug = true, -- set to false to disable dap
                 dap_debug_keymap = true, -- true: use keymap for debugger defined in go/dap.lua
-                -- false: do not use keymap in go/dap.lua.  you must define your own.
-                -- windows: use visual studio keymap
-                dap_debug_gui = true, -- bool|table put your dap-ui setup here set to false to disable
-                dap_debug_vt = false, -- bool|table put your dap-virtual-text setup here set to false to disable
+                dap_debug_gui = false,
+                dap_debug_vt = {
+                    enabled = true, -- enable this plugin (the default)
+                    enabled_commands = true, -- create commands DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, (DapVirtualTextForceRefresh for refreshing when debug adapter did not notify its termination)
+                    highlight_changed_variables = true, -- highlight changed values with NvimDapVirtualTextChanged, else always NvimDapVirtualText
+                    highlight_new_as_changed = false, -- highlight new variables in the same way as changed variables (if highlight_changed_variables)
+                    show_stop_reason = true, -- show stop reason when stopped for exceptions
+                    commented = false, -- prefix virtual text with comment string
+                    only_first_definition = true, -- only show virtual text at first definition (if there are multiple)
+                    all_references = false, -- show virtual text on all all references of the variable (not only definitions)
+
+                    -- experimental features:
+                    virt_text_pos = 'eol', -- position of virtual text, see `:h nvim_buf_set_extmark()`
+                    all_frames = false, -- show virtual text for all stack frames not only current. Only works for debugpy on my machine.
+                    virt_lines = false, -- show virtual lines instead of virtual text (will flicker!)
+                    virt_text_win_col = nil -- position the virtual text at a fixed window column (starting from the first text column) ,
+                    -- e.g. 80 to position at column 80, see `:h nvim_buf_set_extmark()`
+                }, -- bool|table put your dap-virtual-text setup here set to false to disable
 
                 dap_port = 38697, -- can be set to a number, if set to -1 go.nvim will pickup a random port
                 dap_timeout = 15, --  see dap option initialize_timeout_sec = 15,
@@ -289,15 +305,6 @@ lvim.plugins = {
                 commented = false, -- prefix virtual text with comment string
                 only_first_definition = true, -- only show virtual text at first definition (if there are multiple)
                 all_references = false, -- show virtual text on all all references of the variable (not only definitions)
-                --- A callback that determines how a variable is displayed or whether it should be omitted
-                --- @param variable Variable https://microsoft.github.io/debug-adapter-protocol/specification#Types_Variable
-                --- @param buf number
-                --- @param stackframe dap.StackFrame https://microsoft.github.io/debug-adapter-protocol/specification#Types_StackFrame
-                --- @param node userdata tree-sitter node identified as variable definition of reference (see `:h tsnode`)
-                --- @return string|nil A text how the virtual text should be displayed or nil, if this variable shouldn't be displayed
-                display_callback = function(variable, _buf, _stackframe, _node)
-                    return variable.name .. ' = ' .. variable.value
-                end,
 
                 -- experimental features:
                 virt_text_pos = 'eol', -- position of virtual text, see `:h nvim_buf_set_extmark()`
@@ -306,7 +313,11 @@ lvim.plugins = {
                 virt_text_win_col = nil -- position the virtual text at a fixed window column (starting from the first text column) ,
                 -- e.g. 80 to position at column 80, see `:h nvim_buf_set_extmark()`
             }
-        end
+        end,
+        dependencies = {
+            "mfussenegger/nvim-dap",
+            "rcarriga/nvim-dap-ui",
+        },
     },
     {
         "folke/todo-comments.nvim",
@@ -498,95 +509,115 @@ lvim.plugins = {
     },
     "MunifTanjim/nui.nvim",
     "nvim-lua/plenary.nvim",
-    "jackMort/ChatGPT.nvim",
-    config = function()
-        require("chatgpt").setup({
-            -- optional configuration
-            -- welcome_message = WELCOME_MESSAGE, -- set to "" if you don't like the fancy godot robot
-            loading_text = "loading",
-            question_sign = "", -- you can use emoji if you want e.g. 🙂
-            answer_sign = "ﮧ", -- 🤖
-            max_line_length = 120,
-            yank_register = "+",
-            chat_layout = {
-                relative = "editor",
-                position = "50%",
-                size = {
-                    height = "80%",
-                    width = "80%",
-                },
-            },
-            settings_window = {
-                border = {
-                    style = "rounded",
-                    text = {
-                        top = " Settings ",
+    {
+        "jackMort/ChatGPT.nvim",
+        config = function()
+            require("chatgpt").setup({
+                -- optional configuration
+                -- welcome_message = WELCOME_MESSAGE, -- set to "" if you don't like the fancy godot robot
+                loading_text = "loading",
+                question_sign = "", -- you can use emoji if you want e.g. 🙂
+                answer_sign = "ﮧ", -- 🤖
+                max_line_length = 120,
+                yank_register = "+",
+                chat_layout = {
+                    relative = "editor",
+                    position = "50%",
+                    size = {
+                        height = "80%",
+                        width = "80%",
                     },
                 },
-            },
-            chat_window = {
-                filetype = "chatgpt",
-                border = {
-                    highlight = "FloatBorder",
-                    style = "rounded",
-                    text = {
-                        top = " ChatGPT ",
+                settings_window = {
+                    border = {
+                        style = "rounded",
+                        text = {
+                            top = " Settings ",
+                        },
                     },
                 },
-            },
-            chat_input = {
-                prompt = "  ",
-                border = {
-                    highlight = "FloatBorder",
-                    style = "rounded",
-                    text = {
-                        top_align = "center",
-                        top = " Prompt ",
+                chat_window = {
+                    filetype = "chatgpt",
+                    border = {
+                        highlight = "FloatBorder",
+                        style = "rounded",
+                        text = {
+                            top = " ChatGPT ",
+                        },
                     },
                 },
-            },
-            openai_params = {
-                model = "text-davinci-003",
-                frequency_penalty = 0,
-                presence_penalty = 0,
-                max_tokens = 300,
-                temperature = 0,
-                top_p = 1,
-                n = 1,
-            },
-            openai_edit_params = {
-                model = "code-davinci-edit-001",
-                temperature = 0,
-                top_p = 1,
-                n = 1,
-            },
-            keymaps = {
-                close = { "<C-c>", "<Esc>" },
-                yank_last = "<C-y>",
-                scroll_up = "<C-u>",
-                scroll_down = "<C-d>",
-                toggle_settings = "<C-o>",
-                new_session = "<C-n>",
-                cycle_windows = "<Tab>",
-            },
+                chat_input = {
+                    prompt = "  ",
+                    border = {
+                        highlight = "FloatBorder",
+                        style = "rounded",
+                        text = {
+                            top_align = "center",
+                            top = " Prompt ",
+                        },
+                    },
+                },
+                openai_params = {
+                    model = "text-davinci-003",
+                    frequency_penalty = 0,
+                    presence_penalty = 0,
+                    max_tokens = 300,
+                    temperature = 0,
+                    top_p = 1,
+                    n = 1,
+                },
+                openai_edit_params = {
+                    model = "code-davinci-edit-001",
+                    temperature = 0,
+                    top_p = 1,
+                    n = 1,
+                },
+                keymaps = {
+                    close = { "<C-c>", "<Esc>" },
+                    yank_last = "<C-y>",
+                    scroll_up = "<C-u>",
+                    scroll_down = "<C-d>",
+                    toggle_settings = "<C-o>",
+                    new_session = "<C-n>",
+                    cycle_windows = "<Tab>",
+                },
 
-        })
-    end,
-    dependencies = {
-        "MunifTanjim/nui.nvim",
-        "nvim-lua/plenary.nvim",
-        "nvim-telescope/telescope.nvim"
-    }
+            })
+        end,
+        dependencies = {
+            "MunifTanjim/nui.nvim",
+            "nvim-lua/plenary.nvim",
+            "nvim-telescope/telescope.nvim"
+        },
+    },
+    {
+        "norcalli/nvim-colorizer.lua",
+        config = function()
+            require("colorizer").setup({ "css", "scss", "html", "javascript" }, {
+                RGB = true, -- #RGB hex codes
+                RRGGBB = true, -- #RRGGBB hex codes
+                RRGGBBAA = true, -- #RRGGBBAA hex codes
+                rgb_fn = true, -- CSS rgb() and rgba() functions
+                hsl_fn = true, -- CSS hsl() and hsla() functions
+                css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+                css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
+            })
+        end,
+    },
+    {
+        "nacro90/numb.nvim",
+        event = "BufRead",
+        config = function()
+            require("numb").setup {
+                show_numbers = true, -- Enable 'number' for the window while peeking
+                show_cursorline = true, -- Enable 'cursorline' for the window while peeking
+            }
+        end,
+    },
 }
 
 require 'chatgpt'.setup()
-require('lspconfig').gopls.setup({
-    dap_debug = true,
-    dap_debug_gui = true
-})
 
-
--- add your own keymapping
 -- lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 -- lvim.keys.normal_mode["<Left>"] = ":echo \"Use h\"<cr>"
 -- lvim.keys.normal_mode["<Right>"] = ":echo \"Use l\"<cr>"
@@ -598,10 +629,6 @@ lvim.keys.insert_mode["<C-f>"] = "<Right>"
 lvim.keys.insert_mode["<C-p>"] = "<Up>"
 lvim.keys.insert_mode["<C-n>"] = "<Down>"
 
-lvim.builtin.lualine.active = true
-lvim.builtin.dap.active = true
-lvim.builtin.terminal.active = true
-lvim.builtin.bufferline.active = true
 
 -- example mappings you can place in some other place
 -- An awesome method to jump to windows
