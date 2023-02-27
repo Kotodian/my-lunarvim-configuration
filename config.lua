@@ -56,8 +56,61 @@ lvim.builtin.treesitter.ensure_installed = {
     "go",
     "gomod",
 }
+local colors = {
+    blue   = '#80a0ff',
+    cyan   = '#79dac8',
+    black  = '#080808',
+    white  = '#c6c6c6',
+    red    = '#ff5189',
+    violet = '#d183e8',
+    grey   = '#303030',
+}
 
--- lvim.builtin.treesitter.ignore_install = { "haskell" }
+lvim.builtin.lualine.options.theme = {
+    normal = {
+        c = { fg = colors.black, bg = colors.violet },
+        a = { fg = colors.white, bg = colors.grey },
+        b = { fg = colors.black, bg = colors.white },
+    },
+    insert = {
+        a = { fg = colors.black, bg = colors.blue },
+    },
+    visual = {
+        a = { fg = colors.black, bg = colors.cyan },
+    },
+    replace = {
+        a = { fg = colors.black, bg = colors.cyan },
+    },
+    inactive = {
+        a = { fg = colors.white, bg = colors.black },
+        b = { fg = colors.white, bg = colors.black },
+        c = { fg = colors.black, bg = colors.black },
+    },
+}
+lvim.builtin.lualine.options.component_separators = '|'
+lvim.builtin.lualine.options.section_separators = { left = '', right = '' }
+lvim.builtin.lualine.sections = {
+    lualine_a = {
+        { 'mode', separator = { left = '' }, right_padding = 2 },
+    },
+    lualine_b = { 'filename', 'branch' },
+    lualine_c = { 'fileformat' },
+    lualine_x = {},
+    lualine_y = { 'filetype', 'progress' },
+    lualine_z = {
+        { 'location', separator = { right = '' }, left_padding = 2 },
+    },
+}
+lvim.builtin.lualine.inactive_sections = {
+    lualine_a = { 'filename' },
+    lualine_b = {},
+    lualine_c = {},
+    lualine_x = {},
+    lualine_y = {},
+    lualine_z = { 'location' },
+}
+lvim.builtin.lualine.tabline = {}
+lvim.builtin.lualine.extensions = {} -- lvim.builtin.treesitter.ignore_install = { "haskell" }
 
 -- -- generic LSP settings <https://www.lunarvim.org/docs/languages#lsp-support>
 -- --- disable automatic installation of servers
