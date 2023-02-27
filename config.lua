@@ -37,7 +37,7 @@ lvim.keys.normal_mode["<S-n>"] = ":NvimTreeToggle<CR>"
 -- }
 
 -- -- Change theme settings
-lvim.colorscheme = "slate"
+lvim.colorscheme = "lunaperche"
 lvim.transparent_window = true
 
 -- After changing plugin config exit and reopen LunarVim, Run :Lazy sync
