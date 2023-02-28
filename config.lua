@@ -1,3 +1,4 @@
+--
 --[[
 THESE ARE EXAMPLE CONFIGS FEEL FREE TO CHANGE TO WHATEVER YOU WANT
  `lvim` is the global options object ]] -- vim options
@@ -152,6 +153,57 @@ require 'lspconfig'.bufls.setup {}
 
 
 lvim.plugins = {
+    {
+        "zbirenbaum/copilot-cmp",
+    },
+    {
+        "zbirenbaum/copilot.lua",
+        lazy = true,
+        cmd = "Copilot",
+        event = "InsertEnter",
+        config = function()
+            require("copilot").setup({
+                cmp = {
+                    enabled = true,
+                    method = "getCompletionsCycling",
+                },
+                panel = {
+                    enabled = true,
+                    auto_refresh = true,
+                    layout = {
+                        position = "bottom", -- | top | left | right
+                        ratio = 0.4
+                    },
+                },
+                suggestion = {
+                    enabled = true,
+                    auto_trigger = true,
+                    debounce = 75,
+                    keymap = {
+                        accept = "<CR>",
+                    },
+                },
+                filetypes = {
+                    yaml = false,
+                    markdown = false,
+                    help = false,
+                    gitcommit = false,
+                    gitrebase = false,
+                    hgcommit = false,
+                    svn = false,
+                    cvs = false,
+                    ["."] = false,
+                },
+                copilot_node_command = 'node', -- Node.js version must be > 16.x
+                server_opts_overrides = {},
+            })
+        end,
+        dependencies = {
+            {
+                "zbirenbaum/copilot-cmp",
+            }
+        }
+    },
     {
         "folke/trouble.nvim",
         cmd = "TroubleToggle",
