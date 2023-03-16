@@ -218,12 +218,12 @@ lvim.plugins = {
         "sindrets/diffview.nvim",
         event = "BufRead",
     },
-    {
-        "Pocco81/auto-save.nvim",
-        config = function()
-            require("auto-save").setup()
-        end,
-    },
+    -- {
+    --     "Pocco81/auto-save.nvim",
+    --     config = function()
+    --         require("auto-save").setup()
+    --     end,
+    -- },
     {
         "iamcco/markdown-preview.nvim",
         build = "cd app && npm install",
