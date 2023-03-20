@@ -39,7 +39,7 @@ lvim.builtin.which_key.mappings.l.R = { "<cmd>LspRestart<cr>", "Restart" }
 -- }
 
 -- -- Change theme settings
-lvim.colorscheme = "lunaperche"
+lvim.colorscheme = "habamax"
 lvim.transparent_window = true
 
 -- After changing plugin config exit and reopen LunarVim, Run :Lazy sync
