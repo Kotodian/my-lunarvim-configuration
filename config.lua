@@ -6,6 +6,7 @@ vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
 vim.opt.relativenumber = true
 vim.opt.termguicolors = true
+vim.cmd("autocmd ColorScheme * highlight Comment guifg=#a9a9a9")
 -- general
 lvim.log.level = "info"
 
@@ -39,8 +40,21 @@ lvim.builtin.which_key.mappings.l.R = { "<cmd>LspRestart<cr>", "Restart" }
 -- }
 
 -- -- Change theme settings
-lvim.colorscheme = "habamax"
+lvim.colorscheme = "slate"
 lvim.transparent_window = true
+
+-- local nvim_web_devicons = require('nvim-web-devicons')
+
+-- nvim_web_devicons.setup({
+--     default = true,
+--     override = {
+--         Dockerfile = {
+--             icon = "",
+--             color = "#1E90FF",
+--             name = "Dockerfile"
+--         },
+--     },
+-- })
 
 -- After changing plugin config exit and reopen LunarVim, Run :Lazy sync
 lvim.builtin.alpha.active = true
