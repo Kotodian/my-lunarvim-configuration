@@ -40,10 +40,11 @@ lvim.builtin.which_key.mappings.l.R = { "<cmd>LspRestart<cr>", "Restart" }
 -- }
 
 -- -- Change theme settings
+lvim.use_icons = true
+lvim.icons.diagnostics.Warning = ""
+lvim.icons.diagnostics.Error = ""
 lvim.colorscheme = "slate"
 lvim.transparent_window = true
-
--- local nvim_web_devicons = require('nvim-web-devicons')
 
 -- nvim_web_devicons.setup({
 --     default = true,
