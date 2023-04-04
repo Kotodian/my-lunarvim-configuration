@@ -133,9 +133,9 @@ lvim.builtin.lualine.extensions = {} -- lvim.builtin.treesitter.ignore_install =
 -- --- disable automatic installation of servers
 -- lvim.lsp.installer.setup.automatic_installation = false
 require 'lspconfig'.bufls.setup {}
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.offsetEncoding = { "utf-16" }
-require("lspconfig").clangd.setup({ capabilities = capabilities })
+-- local capabilities = vim.lsp.protocol.make_client_capabilities()
+-- capabilities.offsetEncoding = { "utf-16" }
+-- require("lspconfig").clangd.setup({ capabilities = capabilities })
 -- ---configure a server manually. IMPORTANT: Requires `:LvimCacheReset` to take effect
 -- ---see the full default list `:lua =lvim.lsp.automatic_configuration.skipped_servers`
 
@@ -754,3 +754,38 @@ vim.keymap.set("n", ",w", function()
     }) or vim.api.nvim_get_current_win()
     vim.api.nvim_set_current_win(picked_window_id)
 end, { desc = "Pick a window" })
+
+-- Don't forget to create the ~/.clang-format file and fill the contents with the following:
+-- BasedOnStyle: LLVM
+-- IndentWidth: 4
+vim.api.nvim_create_autocmd("BufEnter", {
+    pattern = { "*.c", "*.cpp" },
+    -- enable wrap mode for json files only
+    command = "setlocal ts=4 sw=4",
+})
+
+vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "clangd" })
+
+local clangd_flags = {
+    "--fallback-style=google",
+    "--background-index",
+    "-j=12",
+    "--all-scopes-completion",
+    "--pch-storage=disk",
+    "--clang-tidy",
+    "--log=error",
+    "--completion-style=detailed",
+    "--header-insertion=iwyu",
+    "--header-insertion-decorators",
+    "--enable-config",
+    "--offset-encoding=utf-16",
+    "--ranking-model=heuristics",
+    "--folding-ranges",
+}
+
+local clangd_bin = "clangd"
+
+local opts = {
+    cmd = { clangd_bin, unpack(clangd_flags) },
+}
+require("lvim.lsp.manager").setup("clangd", opts)
