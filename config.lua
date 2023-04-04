@@ -133,6 +133,9 @@ lvim.builtin.lualine.extensions = {} -- lvim.builtin.treesitter.ignore_install =
 -- --- disable automatic installation of servers
 -- lvim.lsp.installer.setup.automatic_installation = false
 require 'lspconfig'.bufls.setup {}
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.offsetEncoding = { "utf-16" }
+require("lspconfig").clangd.setup({ capabilities = capabilities })
 -- ---configure a server manually. IMPORTANT: Requires `:LvimCacheReset` to take effect
 -- ---see the full default list `:lua =lvim.lsp.automatic_configuration.skipped_servers`
 
