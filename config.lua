@@ -624,6 +624,7 @@ lvim.plugins = {
     "MunifTanjim/nui.nvim",
     "nvim-lua/plenary.nvim",
     {
+        -- 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
         "jackMort/ChatGPT.nvim",
         config = function()
             require("chatgpt").setup({
@@ -763,6 +764,14 @@ vim.api.nvim_create_autocmd("BufEnter", {
     -- enable wrap mode for json files only
     command = "setlocal ts=4 sw=4",
 })
+local formatters = require "lvim.lsp.null-ls.formatters"
+formatters.setup {
+    {
+        command = "clang-format",
+        filetype = { "c", "cpp", "cs", "java" },
+        extra_args = { "--style", "file:~/.clang-format" }
+    }
+}
 
 vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "clangd" })
 
