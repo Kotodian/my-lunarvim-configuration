@@ -12,7 +12,7 @@ lvim.log.level = "info"
 
 lvim.format_on_save = {
     enabled = true,
-    pattern = "*.lua,*.rs,*.go,*.proto",
+    pattern = "*.lua,*.rs,*.go,*.proto, *.c",
     timeout = 1000,
 }
 -- lvim.use_icons = false
@@ -69,7 +69,6 @@ lvim.builtin.dap.active = true
 -- Automatically install missing parsers when entering buffer
 lvim.builtin.treesitter.auto_install = true
 lvim.builtin.treesitter.ensure_installed = {
-    "rust",
     "go",
     "gomod",
 }
