@@ -623,7 +623,6 @@ lvim.plugins = {
     "MunifTanjim/nui.nvim",
     "nvim-lua/plenary.nvim",
     {
-        -- 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
         "jackMort/ChatGPT.nvim",
         config = function()
             require("chatgpt").setup({
