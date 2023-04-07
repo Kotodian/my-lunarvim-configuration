@@ -1,7 +1,8 @@
 --
 --[[
 THESE ARE EXAMPLE CONFIGS FEEL FREE TO CHANGE TO WHATEVER YOU WANT
- `lvim` is the global options object ]] -- vim options
+ `lvim` is the global options object ]]
+-- vim options
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
 vim.opt.relativenumber = true
@@ -261,7 +262,6 @@ lvim.plugins = {
                     bo = {
                         -- if the file type is one of following, the window will be ignored
                         filetype = { "neo-tree", "neo-tree-popup", "notify", "quickfix" },
-
                         -- if the buffer type is one of following, the window will be ignored
                         buftype = { "terminal" },
                     },
@@ -274,30 +274,30 @@ lvim.plugins = {
         "ray-x/go.nvim",
         config = function()
             require('go').setup({
-                disable_defaults = false, -- true|false when true set false to all boolean settings and replace all table
+                disable_defaults = false,                       -- true|false when true set false to all boolean settings and replace all table
                 -- settings with {}
-                go = 'go', -- go command, can be go[default] or go1.18beta1
-                goimport = 'gopls', -- goimport command, can be gopls[default] or goimport
-                fillstruct = 'gopls', -- can be nil (use fillstruct, slower) and gopls
-                gofmt = 'gofumpt', --gofmt cmd,
-                max_line_len = 128, -- max line length in golines format, Target maximum line length for golines
-                tag_transform = false, -- can be transform option("snakecase", "camelcase", etc) check gomodifytags for details and more options
-                tag_options = 'json=omitempty', -- sets options sent to gomodifytags, i.e., json=omitempty
-                gotests_template = "", -- sets gotests -template parameter (check gotests for details)
-                gotests_template_dir = "", -- sets gotests -template_dir parameter (check gotests for details)
-                comment_placeholder = '', -- comment_placeholder your cool placeholder e.g. ﳑ       
+                go = 'go',                                      -- go command, can be go[default] or go1.18beta1
+                goimport = 'gopls',                             -- goimport command, can be gopls[default] or goimport
+                fillstruct = 'gopls',                           -- can be nil (use fillstruct, slower) and gopls
+                gofmt = 'gofumpt',                              --gofmt cmd,
+                max_line_len = 128,                             -- max line length in golines format, Target maximum line length for golines
+                tag_transform = false,                          -- can be transform option("snakecase", "camelcase", etc) check gomodifytags for details and more options
+                tag_options = 'json=omitempty',                 -- sets options sent to gomodifytags, i.e., json=omitempty
+                gotests_template = "",                          -- sets gotests -template parameter (check gotests for details)
+                gotests_template_dir = "",                      -- sets gotests -template_dir parameter (check gotests for details)
+                comment_placeholder = '',                       -- comment_placeholder your cool placeholder e.g. ﳑ       
                 icons = { breakpoint = '🧘', currentpos = '🏃' }, -- setup to `false` to disable icons setup
                 -- icons = false, -- setup to `false` to disable icons setup
-                verbose = false, -- output loginf in messages
-                lsp_cfg = true, -- true: use non-default gopls setup specified in go/lsp.lua
+                verbose = false,                                -- output loginf in messages
+                lsp_cfg = true,                                 -- true: use non-default gopls setup specified in go/lsp.lua
                 -- false: do nothing
                 -- if lsp_cfg is a table, merge table with with non-default gopls setup in go/lsp.lua, e.g.
                 --   lsp_cfg = {settings={gopls={matcher='CaseInsensitive', ['local'] = 'your_local_module_path', gofumpt = true }}}
-                lsp_gofumpt = false, -- true: set default gofmt in gopls format to gofumpt
+                lsp_gofumpt = false,  -- true: set default gofmt in gopls format to gofumpt
                 lsp_on_attach = true, -- nil: use on_attach function defined in go/lsp.lua,
                 --      when lsp_cfg is true
                 -- if lsp_on_attach is a function: use this function as on_attach function for gopls
-                lsp_keymaps = true, -- set to false to disable gopls/lsp keymap
+                lsp_keymaps = true,  -- set to false to disable gopls/lsp keymap
                 lsp_codelens = true, -- set to false to disable codelens, true by default, you can use a function
                 -- function(bufnr)
                 --    vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>F", "<cmd>lua vim.lsp.buf.formatting()<CR>", {noremap=true, silent=true})
@@ -341,47 +341,46 @@ lvim.plugins = {
                     -- The color of the hints
                     highlight = "Comment",
                 },
-                gopls_cmd = nil, -- if you need to specify gopls path and cmd, e.g {"/home/user/lsp/gopls", "-logfile","/var/log/gopls.log" }
+                gopls_cmd = nil,          -- if you need to specify gopls path and cmd, e.g {"/home/user/lsp/gopls", "-logfile","/var/log/gopls.log" }
                 gopls_remote_auto = true, -- add -remote=auto to gopls
                 gocoverage_sign = "█",
-                sign_priority = 5, -- change to a higher number to override other signs
-                dap_debug = true, -- set to false to disable dap
-                dap_debug_keymap = true, -- true: use keymap for debugger defined in go/dap.lua
+                sign_priority = 5,        -- change to a higher number to override other signs
+                dap_debug = true,         -- set to false to disable dap
+                dap_debug_keymap = true,  -- true: use keymap for debugger defined in go/dap.lua
                 dap_debug_gui = false,
                 dap_debug_vt = {
-                    enabled = true, -- enable this plugin (the default)
-                    enabled_commands = true, -- create commands DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, (DapVirtualTextForceRefresh for refreshing when debug adapter did not notify its termination)
+                    enabled = true,                     -- enable this plugin (the default)
+                    enabled_commands = true,            -- create commands DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, (DapVirtualTextForceRefresh for refreshing when debug adapter did not notify its termination)
                     highlight_changed_variables = true, -- highlight changed values with NvimDapVirtualTextChanged, else always NvimDapVirtualText
-                    highlight_new_as_changed = false, -- highlight new variables in the same way as changed variables (if highlight_changed_variables)
-                    show_stop_reason = true, -- show stop reason when stopped for exceptions
-                    commented = false, -- prefix virtual text with comment string
-                    only_first_definition = true, -- only show virtual text at first definition (if there are multiple)
-                    all_references = false, -- show virtual text on all all references of the variable (not only definitions)
-
+                    highlight_new_as_changed = false,   -- highlight new variables in the same way as changed variables (if highlight_changed_variables)
+                    show_stop_reason = true,            -- show stop reason when stopped for exceptions
+                    commented = false,                  -- prefix virtual text with comment string
+                    only_first_definition = true,       -- only show virtual text at first definition (if there are multiple)
+                    all_references = false,             -- show virtual text on all all references of the variable (not only definitions)
                     -- experimental features:
-                    virt_text_pos = 'eol', -- position of virtual text, see `:h nvim_buf_set_extmark()`
-                    all_frames = false, -- show virtual text for all stack frames not only current. Only works for debugpy on my machine.
-                    virt_lines = false, -- show virtual lines instead of virtual text (will flicker!)
-                    virt_text_win_col = nil -- position the virtual text at a fixed window column (starting from the first text column) ,
+                    virt_text_pos = 'eol',              -- position of virtual text, see `:h nvim_buf_set_extmark()`
+                    all_frames = false,                 -- show virtual text for all stack frames not only current. Only works for debugpy on my machine.
+                    virt_lines = false,                 -- show virtual lines instead of virtual text (will flicker!)
+                    virt_text_win_col = nil             -- position the virtual text at a fixed window column (starting from the first text column) ,
                     -- e.g. 80 to position at column 80, see `:h nvim_buf_set_extmark()`
-                }, -- bool|table put your dap-virtual-text setup here set to false to disable
-
-                dap_port = 38697, -- can be set to a number, if set to -1 go.nvim will pickup a random port
-                dap_timeout = 15, --  see dap option initialize_timeout_sec = 15,
-                dap_retries = 20, -- see dap option max_retries
-                textobjects = true, -- enable default text jobects through treesittter-text-objects
-                test_runner = 'go', -- one of {`go`, `richgo`, `dlv`, `ginkgo`, `gotestsum`}
-                run_in_floaterm = true, -- set to true to run in float window. :GoTermClose closes the floatterm
+                },                                      -- bool|table put your dap-virtual-text setup here set to false to disable
+                dap_port = 38697,                       -- can be set to a number, if set to -1 go.nvim will pickup a random port
+                dap_timeout = 15,                       --  see dap option initialize_timeout_sec = 15,
+                dap_retries = 20,                       -- see dap option max_retries
+                textobjects = true,                     -- enable default text jobects through treesittter-text-objects
+                test_runner = 'go',                     -- one of {`go`, `richgo`, `dlv`, `ginkgo`, `gotestsum`}
+                run_in_floaterm = true,                 -- set to true to run in float window. :GoTermClose closes the floatterm
                 -- float term recommend if you use richgo/ginkgo with terminal color
 
-                floaterm = { -- position
+                floaterm = {
+                    -- position
                     posititon = 'right', -- one of {`top`, `bottom`, `left`, `right`, `center`, `auto`}
                     width = 1,
                     height = 1
                 },
-                trouble = false, -- true: use trouble to open quickfix
+                trouble = false,  -- true: use trouble to open quickfix
                 test_efm = false, -- errorfomat for quickfix, default mix mode, set to true will be efm only
-                luasnip = false, -- enable included luasnip snippets. you can also disable while add lua/snips folder to luasnip load
+                luasnip = false,  -- enable included luasnip snippets. you can also disable while add lua/snips folder to luasnip load
                 --  Do not enable this if you already added the path, that will duplicate the entries
             })
         end,
@@ -410,19 +409,19 @@ lvim.plugins = {
         "theHamsta/nvim-dap-virtual-text",
         config = function()
             require("nvim-dap-virtual-text").setup {
-                enabled = true, -- enable this plugin (the default)
-                enabled_commands = true, -- create commands DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, (DapVirtualTextForceRefresh for refreshing when debug adapter did not notify its termination)
+                enabled = true,                     -- enable this plugin (the default)
+                enabled_commands = true,            -- create commands DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, (DapVirtualTextForceRefresh for refreshing when debug adapter did not notify its termination)
                 highlight_changed_variables = true, -- highlight changed values with NvimDapVirtualTextChanged, else always NvimDapVirtualText
-                highlight_new_as_changed = false, -- highlight new variables in the same way as changed variables (if highlight_changed_variables)
-                show_stop_reason = true, -- show stop reason when stopped for exceptions
-                commented = false, -- prefix virtual text with comment string
-                only_first_definition = true, -- only show virtual text at first definition (if there are multiple)
-                all_references = false, -- show virtual text on all all references of the variable (not only definitions)
+                highlight_new_as_changed = false,   -- highlight new variables in the same way as changed variables (if highlight_changed_variables)
+                show_stop_reason = true,            -- show stop reason when stopped for exceptions
+                commented = false,                  -- prefix virtual text with comment string
+                only_first_definition = true,       -- only show virtual text at first definition (if there are multiple)
+                all_references = false,             -- show virtual text on all all references of the variable (not only definitions)
 
                 -- experimental features:
-                virt_text_pos = 'eol', -- position of virtual text, see `:h nvim_buf_set_extmark()`
-                all_frames = false, -- show virtual text for all stack frames not only current. Only works for debugpy on my machine.
-                virt_lines = false, -- show virtual lines instead of virtual text (will flicker!)
+                virt_text_pos = 'eol',  -- position of virtual text, see `:h nvim_buf_set_extmark()`
+                all_frames = false,     -- show virtual text for all stack frames not only current. Only works for debugpy on my machine.
+                virt_lines = false,     -- show virtual lines instead of virtual text (will flicker!)
                 virt_text_win_col = nil -- position the virtual text at a fixed window column (starting from the first text column) ,
                 -- e.g. 80 to position at column 80, see `:h nvim_buf_set_extmark()`
             }
@@ -454,54 +453,41 @@ lvim.plugins = {
                     -- callback to execute once rust-analyzer is done initializing the workspace
                     -- The callback receives one parameter indicating the `health` of the server: "ok" | "warning" | "error"
                     on_initialized = nil,
-
                     -- automatically call RustReloadWorkspace when writing to a Cargo.toml file.
                     reload_workspace_from_cargo_toml = true,
-
                     autoSetHints = true,
                     runnables = {
                         use_telescope = true,
                     },
-
                     -- These apply to the default RustSetInlayHints command
                     inlay_hints = {
                         -- automatically set inlay hints (type hints)
                         -- default: true
                         auto = true,
-
                         -- Only show inlay hints for the current line
                         only_current_line = false,
-
                         -- whether to show parameter hints with the inlay hints or not
                         -- default: true
                         show_parameter_hints = true,
-
                         -- prefix for parameter hints
                         -- default: "<-"
                         parameter_hints_prefix = "<- ",
-
                         -- prefix for all the other hints (type, chaining)
                         -- default: "=>"
                         other_hints_prefix = "=> ",
-
                         -- whether to align to the length of the longest line in the file
                         max_len_align = false,
-
                         -- padding from the left if max_len_align is true
                         max_len_align_padding = 1,
-
                         -- whether to align to the extreme right or not
                         right_align = false,
-
                         -- padding from the right if right_align is true
                         right_align_padding = 7,
-
                         -- The color of the hints
                         highlight = "Comment",
                     },
                     -- options same as lsp hover / vim.lsp.util.open_floating_preview()
                     hover_actions = {
-
                         -- the border that is used for the hover window
                         -- see vim.api.nvim_open_win()
                         border = {
@@ -514,13 +500,10 @@ lvim.plugins = {
                             { "╰", "FloatBorder" },
                             { "│", "FloatBorder" },
                         },
-
                         -- Maximal width of the hover window. Nil means no max.
                         max_width = nil,
-
                         -- Maximal height of the hover window. Nil means no max.
                         max_height = nil,
-
                         -- whether the hover action window gets automatically focused
                         -- default: false
                         auto_focus = false,
@@ -540,7 +523,6 @@ lvim.plugins = {
                         -- crates
                         -- default: true
                         full = true,
-
                         -- List of backends found on: https://graphviz.org/docs/outputs/
                         -- Is used for input validation and autocompletion
                         -- Last updated: 2021-08-26
@@ -694,7 +676,6 @@ lvim.plugins = {
                     new_session = "<C-n>",
                     cycle_windows = "<Tab>",
                 },
-
             })
         end,
         dependencies = {
@@ -707,13 +688,13 @@ lvim.plugins = {
         "norcalli/nvim-colorizer.lua",
         config = function()
             require("colorizer").setup({ "css", "scss", "html", "javascript" }, {
-                RGB = true, -- #RGB hex codes
-                RRGGBB = true, -- #RRGGBB hex codes
+                RGB = true,      -- #RGB hex codes
+                RRGGBB = true,   -- #RRGGBB hex codes
                 RRGGBBAA = true, -- #RRGGBBAA hex codes
-                rgb_fn = true, -- CSS rgb() and rgba() functions
-                hsl_fn = true, -- CSS hsl() and hsla() functions
-                css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-                css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
+                rgb_fn = true,   -- CSS rgb() and rgba() functions
+                hsl_fn = true,   -- CSS hsl() and hsla() functions
+                css = true,      -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+                css_fn = true,   -- Enable all CSS *functions*: rgb_fn, hsl_fn
             })
         end,
     },
@@ -722,7 +703,7 @@ lvim.plugins = {
         event = "BufRead",
         config = function()
             require("numb").setup {
-                show_numbers = true, -- Enable 'number' for the window while peeking
+                show_numbers = true,    -- Enable 'number' for the window while peeking
                 show_cursorline = true, -- Enable 'cursorline' for the window while peeking
             }
         end,
@@ -749,8 +730,8 @@ local picker = require("window-picker")
 
 vim.keymap.set("n", ",w", function()
     local picked_window_id = picker.pick_window({
-        include_current_win = true,
-    }) or vim.api.nvim_get_current_win()
+            include_current_win = true,
+        }) or vim.api.nvim_get_current_win()
     vim.api.nvim_set_current_win(picked_window_id)
 end, { desc = "Pick a window" })
 
