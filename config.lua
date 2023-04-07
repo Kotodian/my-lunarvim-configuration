@@ -12,7 +12,7 @@ lvim.log.level = "info"
 
 lvim.format_on_save = {
     enabled = true,
-    pattern = "*.lua,*.rs,*.go,*.proto, *.c",
+    pattern = "*.lua,*.rs,*.go,*.proto,*.c",
     timeout = 1000,
 }
 -- lvim.use_icons = false
