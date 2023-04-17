@@ -402,7 +402,12 @@ lvim.plugins = {
             notify.setup({
                 backgroud_colour = '#000000'
             })
-            vim.notify = notify
+            vim.notify = function(msg, ...)
+                if msg:match("warning: multiple different client offset_encodings") then
+                    return
+                end
+                require('notify')(msg, ...)
+            end
         end
     },
     {
