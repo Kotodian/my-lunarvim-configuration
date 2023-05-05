@@ -44,7 +44,7 @@ lvim.builtin.which_key.mappings.l.R = { "<cmd>LspRestart<cr>", "Restart" }
 lvim.use_icons = true
 lvim.icons.diagnostics.Warning = ""
 lvim.icons.diagnostics.Error = ""
-lvim.colorscheme = "slate"
+lvim.colorscheme = "blue"
 lvim.transparent_window = true
 
 -- nvim_web_devicons.setup({
