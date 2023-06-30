@@ -147,6 +147,12 @@ require 'lspconfig'.bufls.setup {}
 -- lvim.lsp.automatic_configuration.skipped_servers = vim.tbl_filter(function(server)
 --   return server ~= "emmet_ls"
 -- end, lvim.lsp.automatic_configuration.skipped_servers)
+-- -- add `pyright` to `skipped_servers` list
+vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "pyright" })
+-- remove `jedi_language_server` from `skipped_servers` list
+lvim.lsp.automatic_configuration.skipped_servers = vim.tbl_filter(function(server)
+    return server ~= "jedi_language_server"
+end, lvim.lsp.automatic_configuration.skipped_servers)
 
 -- -- you can set a custom on_attach function that will be used for all the language servers
 -- -- See <https://github.com/neovim/nvim-lspconfig#keybindings-and-completion>
@@ -172,49 +178,6 @@ require 'lspconfig'.bufls.setup {}
 
 
 lvim.plugins = {
-    {
-        "zbirenbaum/copilot-cmp",
-    },
-    {
-        "zbirenbaum/copilot.lua",
-        lazy = true,
-        cmd = "Copilot",
-        event = "InsertEnter",
-        config = function()
-            require("copilot").setup({
-                cmp = {
-                    enabled = true,
-                    method = "getCompletionsCycling",
-                },
-                suggestion = {
-                    enabled = true,
-                    auto_trigger = true,
-                    debounce = 75,
-                    keymap = {
-                        accept = "<tab>",
-                    },
-                },
-                filetypes = {
-                    yaml = false,
-                    markdown = false,
-                    help = false,
-                    gitcommit = false,
-                    gitrebase = false,
-                    hgcommit = false,
-                    svn = false,
-                    cvs = false,
-                    ["."] = false,
-                },
-                copilot_node_command = 'node', -- Node.js version must be > 16.x
-                server_opts_overrides = {},
-            })
-        end,
-        dependencies = {
-            {
-                "zbirenbaum/copilot-cmp",
-            }
-        }
-    },
     {
         "folke/trouble.nvim",
         cmd = "TroubleToggle",
@@ -306,7 +269,7 @@ lvim.plugins = {
                 lsp_diag_hdlr = true, -- hook lsp diag handler
                 lsp_diag_underline = true,
                 -- virtual text setup
-                lsp_diag_virtual_text = { space = 0, prefix = "" },
+                lsp_diag_virtual_text = { space = 0 },
                 lsp_diag_signs = true,
                 lsp_diag_update_in_insert = false,
                 lsp_document_formatting = true,
@@ -654,8 +617,8 @@ local picker = require("window-picker")
 
 vim.keymap.set("n", ",w", function()
     local picked_window_id = picker.pick_window({
-            include_current_win = true,
-        }) or vim.api.nvim_get_current_win()
+        include_current_win = true,
+    }) or vim.api.nvim_get_current_win()
     vim.api.nvim_set_current_win(picked_window_id)
 end, { desc = "Pick a window" })
 
@@ -667,37 +630,3 @@ vim.api.nvim_create_autocmd("BufEnter", {
     -- enable wrap mode for json files only
     command = "setlocal ts=4 sw=4",
 })
-local formatters = require "lvim.lsp.null-ls.formatters"
-formatters.setup {
-    {
-        command = "clang-format",
-        filetype = { "c", "cpp", "cs", "java" },
-        extra_args = { "--style", "file:~/.clang-format" }
-    }
-}
-
-vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "clangd" })
-
-local clangd_flags = {
-    "--fallback-style=google",
-    "--background-index",
-    "-j=12",
-    "--all-scopes-completion",
-    "--pch-storage=disk",
-    "--clang-tidy",
-    "--log=error",
-    "--completion-style=detailed",
-    "--header-insertion=iwyu",
-    "--header-insertion-decorators",
-    "--enable-config",
-    "--offset-encoding=utf-16",
-    "--ranking-model=heuristics",
-    "--folding-ranges",
-}
-
-local clangd_bin = "clangd"
-
-local opts = {
-    cmd = { clangd_bin, unpack(clangd_flags) },
-}
-require("lvim.lsp.manager").setup("clangd", opts)
