@@ -66,7 +66,7 @@ lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
 lvim.builtin.gitsigns.opts.current_line_blame = true
 lvim.builtin.dap.active = true
-
+lvim.builtin.cmp.sources[2].entry_filter = nil
 -- Automatically install missing parsers when entering buffer
 lvim.builtin.treesitter.auto_install = true
 lvim.builtin.treesitter.ensure_installed = {
