@@ -599,11 +599,6 @@ lvim.plugins = {
 }
 
 
--- lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
--- lvim.keys.normal_mode["<Left>"] = ":echo \"Use h\"<cr>"
--- lvim.keys.normal_mode["<Right>"] = ":echo \"Use l\"<cr>"
--- lvim.keys.normal_mode["<Up>"] = ":echo \"Use k\"<cr>"
--- lvim.keys.normal_mode["<Down>"] = ":echo \"Use j\"<cr>"
 
 lvim.keys.insert_mode["<C-b>"] = "<Left>"
 lvim.keys.insert_mode["<C-f>"] = "<Right>"
