@@ -13,7 +13,7 @@ lvim.log.level = "info"
 
 lvim.format_on_save = {
     enabled = true,
-    pattern = "*.lua,*.rs,*.go,*.proto,*.c,*.cpp",
+    pattern = "*.lua,*.rs,*.proto,*.c,*.cpp",
     timeout = 1000,
 }
 -- lvim.use_icons = false
@@ -24,7 +24,7 @@ lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
 lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
 lvim.keys.normal_mode["<S-x>"] = ":BufferKill<CR>"
-lvim.keys.normal_mode["<S-n>"] = ":NvimTreeToggle<CR>"
+-- lvim.keys.normal_mode["<S-n>"] = ":NvimTreeToggle<CR>"
 lvim.builtin.which_key.mappings.l.R = { "<cmd>LspRestart<cr>", "Restart" }
 
 -- -- Use which-key to add extra bindings with the leader-key prefix
@@ -44,7 +44,7 @@ lvim.builtin.which_key.mappings.l.R = { "<cmd>LspRestart<cr>", "Restart" }
 lvim.use_icons = true
 lvim.icons.diagnostics.Warning = ""
 lvim.icons.diagnostics.Error = ""
-lvim.colorscheme = "blue"
+lvim.colorscheme = "habamax"
 lvim.transparent_window = true
 
 -- nvim_web_devicons.setup({
@@ -237,22 +237,22 @@ lvim.plugins = {
         "ray-x/go.nvim",
         config = function()
             require('go').setup({
-                disable_defaults = false,                       -- true|false when true set false to all boolean settings and replace all table
+                disable_defaults = false, -- true|false when true set false to all boolean settings and replace all table
                 -- settings with {}
-                go = 'go',                                      -- go command, can be go[default] or go1.18beta1
-                goimport = 'gopls',                             -- goimport command, can be gopls[default] or goimport
-                fillstruct = 'gopls',                           -- can be nil (use fillstruct, slower) and gopls
-                gofmt = 'gofumpt',                              --gofmt cmd,
-                max_line_len = 128,                             -- max line length in golines format, Target maximum line length for golines
-                tag_transform = false,                          -- can be transform option("snakecase", "camelcase", etc) check gomodifytags for details and more options
-                tag_options = 'json=omitempty',                 -- sets options sent to gomodifytags, i.e., json=omitempty
-                gotests_template = "",                          -- sets gotests -template parameter (check gotests for details)
-                gotests_template_dir = "",                      -- sets gotests -template_dir parameter (check gotests for details)
-                comment_placeholder = '',                       -- comment_placeholder your cool placeholder e.g. ﳑ       
+                go = 'go', -- go command, can be go[default] or go1.18beta1
+                goimport = 'gopls', -- goimport command, can be gopls[default] or goimport
+                fillstruct = 'gopls', -- can be nil (use fillstruct, slower) and gopls
+                gofmt = 'gofumpt', --gofmt cmd,
+                max_line_len = 128, -- max line length in golines format, Target maximum line length for golines
+                tag_transform = false, -- can be transform option("snakecase", "camelcase", etc) check gomodifytags for details and more options
+                tag_options = 'json=omitempty', -- sets options sent to gomodifytags, i.e., json=omitempty
+                gotests_template = "", -- sets gotests -template parameter (check gotests for details)
+                gotests_template_dir = "", -- sets gotests -template_dir parameter (check gotests for details)
+                comment_placeholder = '', -- comment_placeholder your cool placeholder e.g. ﳑ       
                 icons = { breakpoint = '🧘', currentpos = '🏃' }, -- setup to `false` to disable icons setup
                 -- icons = false, -- setup to `false` to disable icons setup
-                verbose = false,                                -- output loginf in messages
-                lsp_cfg = true,                                 -- true: use non-default gopls setup specified in go/lsp.lua
+                verbose = false, -- output loginf in messages
+                lsp_cfg = true, -- true: use non-default gopls setup specified in go/lsp.lua
                 -- false: do nothing
                 -- if lsp_cfg is a table, merge table with with non-default gopls setup in go/lsp.lua, e.g.
                 --   lsp_cfg = {settings={gopls={matcher='CaseInsensitive', ['local'] = 'your_local_module_path', gofumpt = true }}}
