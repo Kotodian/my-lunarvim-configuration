@@ -24,11 +24,14 @@ lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
 lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
 lvim.keys.normal_mode["<S-x>"] = ":BufferKill<CR>"
--- lvim.keys.normal_mode["<S-n>"] = ":NvimTreeToggle<CR>"
-lvim.builtin.which_key.mappings.l.R = { "<cmd>LspRestart<cr>", "Restart" }
+lvim.keys.insert_mode["<C-b>"] = "<Left>"
+lvim.keys.insert_mode["<C-f>"] = "<Right>"
+lvim.keys.insert_mode["<C-p>"] = "<Up>"
+lvim.keys.insert_mode["<C-n>"] = "<Down>"
 
 -- -- Use which-key to add extra bindings with the leader-key prefix
-lvim.builtin.which_key.mappings["N"] = { "<cmd>Neogit<cr>", "neogit" }
+lvim.builtin.which_key.mappings.l.R = { "<cmd>LspRestart<cr>", "Restart" }
+lvim.builtin.which_key.mappings.g.g = { "<cmd>Neogit<cr>", "neogit" }
 -- lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
 -- lvim.builtin.which_key.mappings["t"] = {
 -- 	name = "Trouble",
@@ -620,10 +623,7 @@ lvim.plugins = {
 
 
 
-lvim.keys.insert_mode["<C-b>"] = "<Left>"
-lvim.keys.insert_mode["<C-f>"] = "<Right>"
-lvim.keys.insert_mode["<C-p>"] = "<Up>"
-lvim.keys.insert_mode["<C-n>"] = "<Down>"
+
 
 
 -- example mappings you can place in some other place
