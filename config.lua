@@ -10,6 +10,10 @@ vim.opt.termguicolors = true
 vim.cmd("autocmd ColorScheme * highlight Comment guifg=#a9a9a9")
 -- general
 lvim.log.level = "info"
+vim.opt.foldmethod = "expr"                     -- default is "normal"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()" -- default is ""
+-- vim.opt.foldenable = false                      -- if this option is true and fold method option is other than normal, every time a document is opened everything will be folded.
+vim.opt.foldlevel = 99
 
 lvim.format_on_save = {
     enabled = true,
@@ -30,6 +34,7 @@ lvim.keys.insert_mode["<C-p>"] = "<Up>"
 lvim.keys.insert_mode["<C-n>"] = "<Down>"
 
 -- -- Use which-key to add extra bindings with the leader-key prefix
+-- lvim.builtin.which_key.setup.plugins.presets.z = true
 lvim.builtin.which_key.mappings.l.R = { "<cmd>LspRestart<cr>", "Restart" }
 lvim.builtin.which_key.mappings.g.g = { "<cmd>Neogit<cr>", "neogit" }
 -- lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
@@ -129,7 +134,7 @@ lvim.builtin.lualine.inactive_sections = {
     lualine_y = {},
     lualine_z = { 'location' },
 }
-lvim.builtin.lualine.tabline = {}
+-- lvim.builtin.lualine.tabline = {}
 lvim.builtin.lualine.extensions = {} -- lvim.builtin.treesitter.ignore_install = { "haskell" }
 
 -- -- generic LSP settings <https://www.lunarvim.org/docs/languages#lsp-support>
@@ -600,12 +605,57 @@ lvim.plugins = {
         end,
     },
     {
-        "ibhagwan/fzf-lua",
-        -- optional for icon support
-        dependencies = { "nvim-tree/nvim-web-devicons" },
+        'ibhagwan/fzf-lua',
         config = function()
-            -- calling `setup` is optional for customization
-            require("fzf-lua").setup({})
+            require 'fzf-lua'.setup {
+                "fzf-native",
+                grep = {
+                    rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=4096",
+                    rg_glob = true,
+                },
+                winopts = {
+                    preview = {
+                        -- default     = 'bat',           -- override the default previewer?
+                        -- default uses the 'builtin' previewer
+                        border       = 'border', -- border|noborder, applies only to
+                        -- native fzf previewers (bat/cat/git/etc)
+                        wrap         = 'wrap', -- wrap|nowrap
+                        hidden       = 'nohidden', -- hidden|nohidden
+                        vertical     = 'down:45%', -- up|down:size
+                        horizontal   = 'right:40%', -- right|left:size
+                        layout       = 'vertical', -- horizontal|vertical|flex
+                        flip_columns = 120, -- #cols to switch to horizontal on flex
+                        -- Only used with the builtin previewer:
+                        title        = true, -- preview border title (file/buf)?
+                        title_align  = "left", -- left|center|right, title alignment
+                        scrollbar    = 'float', -- `false` or string:'float|border'
+                        -- float:  in-window floating border
+                        -- border: in-border chars (see below)
+                        scrolloff    = '-2', -- float scrollbar offset from right
+                        -- applies only when scrollbar = 'float'
+                        scrollchars  = { '█', '' }, -- scrollbar chars ({ <full>, <empty> }
+                        -- applies only when scrollbar = 'border'
+                        delay        = 100, -- delay(ms) displaying the preview
+                        -- prevents lag on fast scrolling
+                        winopts      = {
+                            -- builtin previewer window options
+                            number         = true,
+                            relativenumber = false,
+                            cursorline     = true,
+                            cursorlineopt  = 'both',
+                            cursorcolumn   = false,
+                            signcolumn     = 'no',
+                            list           = false,
+                            foldenable     = false,
+                            foldmethod     = 'manual',
+                        },
+                    },
+                    on_create = function()
+                        vim.keymap.set("t", "<C-j>", "<Down>", { silent = true, buffer = true })
+                        vim.keymap.set("t", "<C-k>", "<Up>", { silent = true, buffer = true })
+                    end,
+                }
+            }
         end
     },
     "sindrets/diffview.nvim",
@@ -618,6 +668,69 @@ lvim.plugins = {
             "ibhagwan/fzf-lua",              -- optional
         },
         config = true
+    },
+    {
+        "ldelossa/litee.nvim",
+        config = function()
+            require("litee.lib").setup({})
+        end
+    },
+    {
+        -- calltree
+        "ldelossa/litee-calltree.nvim",
+        dependencies = {
+            "ldelossa/litee.nvim", -- optional
+        },
+        config = function()
+            require("litee.calltree").setup({
+                -- When retrieving Call Hierarchy items some language servers will respond with
+                -- different symbol names then when a document symbol or workspace symbol request
+                -- is made.
+                --
+                -- To unify the experience `litee-calltree.nvim` can collect symbol details for
+                -- each Call Hierarhcy item, providing a more accurate display of symbol details
+                -- in the Calltree UI window.
+                --
+                -- This takes a little longer, but is also async, and will not block Neovim.
+                resolve_symbols = true,
+                -- the jump_mode used for jumping from
+                -- calltree node to source code line.
+                -- "invoking" will use the last window that invoked the calltree (feels natural)
+                -- "neighbor" will use the closest neighbor opposite to the panel orientation
+                -- (if panel is left, uses window to the right.)
+                jump_mode = "invoking",
+                -- enables hiding the cursor inside the Calltree UI.
+                hide_cursor = true,
+                -- Maps arrow keys to resizing the Calltree UI within the `litee.nvim` Panel.
+                map_resize_keys = true,
+                -- Disables all highlighting.
+                no_hls = false,
+                -- Determines if initial creation of a calltree opens in the
+                -- Panel or in a Popout window. Options are "panel" or "popout"
+                on_open = "panel",
+                -- If true, disable all keymaps
+                disable_keymaps = false,
+                -- The default keymaps. Users can provide overrides
+                -- to these mappings via the setup function.
+                keymaps = {
+                    expand = "zo",
+                    collapse = "zc",
+                    collapse_all = "zM",
+                    jump = "<CR>",
+                    jump_split = "s",
+                    jump_vsplit = "v",
+                    jump_tab = "t",
+                    hover = "i",
+                    details = "d",
+                    close = "X",
+                    close_panel_pop_out = "<Esc>",
+                    help = "?",
+                    hide = "H",
+                    switch = "S",
+                    focus = "f"
+                },
+            })
+        end
     }
 }
 
