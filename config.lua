@@ -13,7 +13,7 @@ lvim.log.level = "info"
 
 lvim.format_on_save = {
     enabled = true,
-    pattern = "*.lua,*.rs,*.proto,*.c,*.cpp",
+    pattern = "*.lua,*.rs,*.proto,*.cpp",
     timeout = 1000,
 }
 -- lvim.use_icons = false
@@ -596,6 +596,26 @@ lvim.plugins = {
             }
         end,
     },
+    {
+        "ibhagwan/fzf-lua",
+        -- optional for icon support
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        config = function()
+            -- calling `setup` is optional for customization
+            require("fzf-lua").setup({})
+        end
+    },
+    "sindrets/diffview.nvim",
+    {
+        "NeogitOrg/neogit",
+        dependencies = {
+            "nvim-lua/plenary.nvim",         -- required
+            "nvim-telescope/telescope.nvim", -- optional
+            "sindrets/diffview.nvim",        -- optional
+            "ibhagwan/fzf-lua",              -- optional
+        },
+        config = true
+    }
 }
 
 
