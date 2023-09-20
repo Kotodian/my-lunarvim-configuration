@@ -617,18 +617,18 @@ lvim.plugins = {
                     preview = {
                         -- default     = 'bat',           -- override the default previewer?
                         -- default uses the 'builtin' previewer
-                        border       = 'border', -- border|noborder, applies only to
+                        border       = 'border',    -- border|noborder, applies only to
                         -- native fzf previewers (bat/cat/git/etc)
-                        wrap         = 'wrap', -- wrap|nowrap
-                        hidden       = 'nohidden', -- hidden|nohidden
-                        vertical     = 'down:45%', -- up|down:size
+                        wrap         = 'wrap',      -- wrap|nowrap
+                        hidden       = 'nohidden',  -- hidden|nohidden
+                        vertical     = 'down:45%',  -- up|down:size
                         horizontal   = 'right:40%', -- right|left:size
-                        layout       = 'vertical', -- horizontal|vertical|flex
-                        flip_columns = 120, -- #cols to switch to horizontal on flex
+                        layout       = 'vertical',  -- horizontal|vertical|flex
+                        flip_columns = 120,         -- #cols to switch to horizontal on flex
                         -- Only used with the builtin previewer:
-                        title        = true, -- preview border title (file/buf)?
-                        title_align  = "left", -- left|center|right, title alignment
-                        scrollbar    = 'float', -- `false` or string:'float|border'
+                        title        = true,        -- preview border title (file/buf)?
+                        title_align  = "left",      -- left|center|right, title alignment
+                        scrollbar    = 'float',     -- `false` or string:'float|border'
                         -- float:  in-window floating border
                         -- border: in-border chars (see below)
                         scrolloff    = '-2', -- float scrollbar offset from right
