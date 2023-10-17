@@ -37,6 +37,9 @@ lvim.keys.insert_mode["<C-n>"] = "<Down>"
 -- lvim.builtin.which_key.setup.plugins.presets.z = true
 lvim.builtin.which_key.mappings.l.R = { "<cmd>LspRestart<cr>", "Restart" }
 lvim.builtin.which_key.mappings.g.g = { "<cmd>Neogit<cr>", "neogit" }
+lvim.builtin.which_key.mappings.c = nil
+lvim.builtin.which_key.mappings.e = { "<cmd>NvimTreeOpen<CR>", "Explorer" }
+lvim.builtin.which_key.mappings.E = { "<cmd>NvimTreeToggle<CR>", "ExplorerToggle" }
 -- lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
 -- lvim.builtin.which_key.mappings["t"] = {
 -- 	name = "Trouble",
@@ -52,7 +55,7 @@ lvim.builtin.which_key.mappings.g.g = { "<cmd>Neogit<cr>", "neogit" }
 lvim.use_icons = true
 lvim.icons.diagnostics.Warning = ""
 lvim.icons.diagnostics.Error = ""
-lvim.colorscheme = "habamax"
+lvim.colorscheme = "lunaperche"
 lvim.transparent_window = true
 
 -- nvim_web_devicons.setup({
@@ -274,12 +277,14 @@ lvim.plugins = {
                 --    vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>F", "<cmd>lua vim.lsp.buf.formatting()<CR>", {noremap=true, silent=true})
                 -- end
                 -- to setup a table of codelens
-                lsp_diag_hdlr = true, -- hook lsp diag handler
-                lsp_diag_underline = true,
-                -- virtual text setup
-                lsp_diag_virtual_text = { space = 0 },
-                lsp_diag_signs = true,
-                lsp_diag_update_in_insert = false,
+                diagnostic = {   -- set diagnostic to false to disable vim.diagnostic setup
+                    hdlr = true, -- hook lsp diag handler
+                    underline = true,
+                    -- virtual text setup
+                    virtual_text = { space = 0, prefix = '■' },
+                    signs = true,
+                    update_in_insert = false,
+                },
                 lsp_document_formatting = true,
                 -- set to true: use gopls to format
                 -- false if you want to use other formatter tool(e.g. efm, nulls)
