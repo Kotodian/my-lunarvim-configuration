@@ -15,20 +15,6 @@ vim.opt.foldexpr = "nvim_treesitter#foldexpr()" -- default is ""
 -- vim.opt.foldenable = false                      -- if this option is true and fold method option is other than normal, every time a document is opened everything will be folded.
 vim.opt.foldlevel = 99
 
--- Set a compatible clipboard manager
-vim.g.clipboard = {
-    name = "WslClipboard",
-    copy = {
-        ["+"] = "clip.exe",
-        ["*"] = "clip.exe",
-    },
-    paste = {
-        ["+"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-        ["*"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-    },
-    cache_enabled = 0,
-}
-
 
 lvim.format_on_save = {
     enabled = true,
